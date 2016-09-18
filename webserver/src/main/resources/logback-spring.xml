@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <logger name="sample.logback" level="DEBUG" />
+    <springProfile name="staging">
+        <logger name="sample.logback" level="TRACE" />
+    </springProfile>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+            </Pattern>
+
+        </layout>
+    </appender>
+
+    <logger name="org.springframework" level="info" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <logger name="com.enigmabridge.respgppro" level="debug" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <root level="error">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
