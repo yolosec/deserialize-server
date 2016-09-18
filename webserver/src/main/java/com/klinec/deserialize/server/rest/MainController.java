@@ -18,8 +18,13 @@ import java.util.Base64;
 public class MainController {
     private final static Logger LOG = LoggerFactory.getLogger(MainController.class);
 
-    @RequestMapping(value = "/suffer", method = RequestMethod.POST)
+    @RequestMapping(value = "/suffer", method = RequestMethod.POST, consumes = "text/plain")
     public GeneralResponse rawRequest(@RequestBody String request) throws Exception {
+        return deserialize(request);
+    }
+
+    @RequestMapping(value = "/suffer", method = RequestMethod.POST)
+    public GeneralResponse rawRequest2(@RequestBody String request) throws Exception {
         return deserialize(request);
     }
 
@@ -37,7 +42,8 @@ public class MainController {
             urlDecoded = urlDecoded
                     .replace(" ", "+")
                     .replace('-', '+')
-                    .replace('_', '/');
+                    .replace('_', '/')
+                    .replace("=", "");
             LOG.info("Payload: " + request);
             decoded = Base64.getDecoder().decode(urlDecoded);
 
